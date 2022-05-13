@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    environment {
+    registry = "hbenyahia/timesheet"
+    registryCredential = '24ab8a06-0386-49e4-a40c-d553fa674f2a'
+    dockerImage = ''
+}
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
@@ -52,6 +56,22 @@ pipeline {
 				bat 'mvn clean package -DskipTests deploy:deploy-file -DgroupId=tn.esprit.spring -DartifactId=Timesheet -Dversion=1.0.0-SNAPSHOT -DgeneratePom=true -Dpackaging=war -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-snapshots/ -Dfile=target/Timesheet-1.0.0-SNAPSHOT.war';
             }
         }
+        stage('Building our image') {
+            steps{
+                script {
+                dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                        }
+                }
+        }
+        stage('Push our image') {
+            steps{
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                    dockerImage.push()
+                    }
+                }
+        }
+
 
             
         }
