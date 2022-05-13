@@ -2,7 +2,6 @@ pipeline {
     agent {
         docker {
             image 'timesheet'
-            registryUrl 'https://hub.docker.com'
             registryCredentialsId 'docker'
             args '-v /var/jenkins_home/.m2:/root/.m2'
         }
