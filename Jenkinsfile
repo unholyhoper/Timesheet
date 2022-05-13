@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker { image 'maven:3.3.3' } }
+    agent { docker { image 'timesheet' } }
     environment {
     registry = "hbenyahia/timesheet"
     registryCredential = '24ab8a06-0386-49e4-a40c-d553fa674f2a'
