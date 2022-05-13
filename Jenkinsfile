@@ -1,8 +1,9 @@
 pipeline {
     agent { docker { image 'timesheet' } }
     environment {
-    registry = "hbenyahia/timesheet"
-    registryCredential = '24ab8a06-0386-49e4-a40c-d553fa674f2a'
+
+    imagename = "timesheet"
+    registryCredential = 'yenigul-dockerhub'
     dockerImage = ''
 }
 
@@ -68,13 +69,14 @@ pipeline {
             steps{
                 script {
                     docker.withRegistry( '', registryCredential ) {
-                    dockerImage.push()
-                    }
-                }
+                        dockerImage.push("$BUILD_NUMBER")
+                        dockerImage.push('latest')
+					}
+				}
+			}
         }
 
 
-            
-        }
-    }
+
+	}
 }
