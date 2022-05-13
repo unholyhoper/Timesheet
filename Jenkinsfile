@@ -1,6 +1,14 @@
 pipeline {
     environment {
 
+        agent {
+            docker {
+                image 'timesheet'
+                registryUrl 'https://registry.hub.docker.com'
+                registryCredentialsId 'Docker'
+                args '-v /var/jenkins_home/.m2:/root/.m2'
+            }
+        }
         imagename = "timesheet"
         registryCredential = 'yenigul-dockerhub'
         dockerImage = ''
@@ -59,10 +67,6 @@ pipeline {
         }
         stage('Building our image') {
             steps {
-                agent {
-                    docker
-                            { image 'timesheet' }
-                }
                 script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
