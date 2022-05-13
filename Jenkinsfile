@@ -9,7 +9,7 @@ pipeline {
 //        }
 //    }
     environment {
-        registry = "unholyhoper/Haythem"
+        registry = "unholyhoper/timesheet"
         imagename = "timesheet"
         registryCredential = 'docker'
         dockerImage = ''
@@ -23,7 +23,7 @@ pipeline {
     stages {
         stage('Cloning Project from Git') {
             steps {
-                git branch: 'Jenkinsfile',
+                git branch: 'Haythem',
                         url: 'https://gitlab.com/Unholyhoper/timesheet.git'
             }
         }
