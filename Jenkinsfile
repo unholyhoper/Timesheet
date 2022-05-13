@@ -3,7 +3,7 @@ pipeline {
         docker {
             image 'timesheet'
             registryUrl 'https://registry.hub.docker.com'
-            registryCredentialsId 'Docker'
+            registryCredentialsId 'docker'
             args '-v /var/jenkins_home/.m2:/root/.m2'
         }
     }
