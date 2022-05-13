@@ -76,7 +76,7 @@ pipeline {
 //        }
         stage('Run Docker containers') {
             steps {
-                powershell("docker-compose up -d")
+                bat "docker-compose up -d"
             }
         }
         stage('TEST') {
