@@ -1,0 +1,21 @@
+version: '2'
+services:
+  timesheet:
+    image: unholyhoper/timesheet
+    hostname: timesheet
+    expose:
+      - "8082"
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql
+  ### Mysql container
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3308:3308"
+    volumes:
+      - /var/lib/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: devops
