@@ -65,15 +65,15 @@ pipeline {
                 }
             }
         }
-        stage('Push our image') {
-            steps {
-                script {
-                    docker.withRegistry('', registryCredential) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
+//        stage('Push our image') {
+//            steps {
+//                script {
+//                    docker.withRegistry('', registryCredential) {
+//                        dockerImage.push()
+//                    }
+//                }
+//            }
+//        }
         stage('Run Docker containers') {
             steps {
                 bat "docker compose up -d -f timesheet.yaml"
