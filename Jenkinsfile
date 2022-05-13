@@ -1,12 +1,14 @@
 pipeline {
-    agent {                 docker.withRegistry('https://registry.hub.docker.com','Docker')
-     { image 'timesheet' } }
+    agent {
+        docker.withRegistry('https://registry.hub.docker.com', 'Docker')
+                { image 'timesheet' }
+    }
     environment {
 
-    imagename = "timesheet"
-    registryCredential = 'yenigul-dockerhub'
-    dockerImage = ''
-}
+        imagename = "timesheet"
+        registryCredential = 'yenigul-dockerhub'
+        dockerImage = ''
+    }
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
@@ -15,9 +17,9 @@ pipeline {
 
     stages {
         stage('Cloning Project from Git') {
-            steps { 
-            git branch: 'Jenkinsfile',
-            url: 'https://gitlab.com/Unholyhoper/timesheet.git'
+            steps {
+                git branch: 'Jenkinsfile',
+                        url: 'https://gitlab.com/Unholyhoper/timesheet.git'
             }
         }
         stage('CLEAN') {
@@ -26,25 +28,25 @@ pipeline {
                 bat 'mvn clean'
             }
         }
-		stage('COMPILE') {
+        stage('COMPILE') {
             steps {
                 echo 'Compiling Project';
                 bat 'mvn compile';
-                
+
             }
-        }	
-        		
+        }
+
         stage('SONARQUE SCAN') {
             steps {
                 echo 'Launching sonarqube scan';
                 bat 'mvn sonar:sonar -Dsonar.projectKey=Projet-DEVOPS-Sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=03e7a8c0ba1a11b502e1bfa698cee58f370ddf6a';
             }
         }
-		stage('TEST') {
+        stage('TEST') {
             steps {
                 echo 'Running JUnit tests'
                 bat 'mvn test';
-                
+
             }
         }
         stage('PACKAGE') {
@@ -55,28 +57,26 @@ pipeline {
         }
         stage('DEPLOY') {
             steps {
-				echo 'Deploying the Project';
-				bat 'mvn clean package -DskipTests deploy:deploy-file -DgroupId=tn.esprit.spring -DartifactId=Timesheet -Dversion=1.0.0-SNAPSHOT -DgeneratePom=true -Dpackaging=war -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-snapshots/ -Dfile=target/Timesheet-1.0.0-SNAPSHOT.war';
+                echo 'Deploying the Project';
+                bat 'mvn clean package -DskipTests deploy:deploy-file -DgroupId=tn.esprit.spring -DartifactId=Timesheet -Dversion=1.0.0-SNAPSHOT -DgeneratePom=true -Dpackaging=war -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-snapshots/ -Dfile=target/Timesheet-1.0.0-SNAPSHOT.war';
             }
         }
         stage('Building our image') {
-            steps{
+            steps {
                 script {
-                dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                        }
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
+            }
         }
         stage('Push our image') {
-            steps{
+            steps {
                 script {
-                        dockerImage.push("$BUILD_NUMBER")
-                        dockerImage.push('latest')
-					}
-				}
-			}
+                    dockerImage.push("$BUILD_NUMBER")
+                    dockerImage.push('latest')
+                }
+            }
         }
+    }
 
 
-
-	}
 }
