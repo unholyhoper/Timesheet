@@ -49,7 +49,7 @@ pipeline {
         stage('PACKAGE') {
             steps {
                 echo 'Packaging Project';
-                bat 'mvn package';
+                bat 'mvn package -DskipTests';
             }
         }
         stage('DEPLOY') {
