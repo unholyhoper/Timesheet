@@ -1,5 +1,5 @@
 pipeline {
-    agent { Docker { image 'timesheet' } }
+    agent { docker { image 'timesheet' } }
     environment {
 
     imagename = "timesheet"
