@@ -9,7 +9,7 @@ pipeline {
 //        }
 //    }
     environment {
-        registry = "unholyhoper/timesheet"
+        registry = "unholyhoper/Haythem"
         imagename = "timesheet"
         registryCredential = 'docker'
         dockerImage = ''
