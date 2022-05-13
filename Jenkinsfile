@@ -82,8 +82,11 @@ pipeline {
                 }
             }
         }
-
-
+        stage('Run Docker containers') {
+            steps {
+                bat "docker compose up -d -f timesheet.yaml"
+            }
+        }
     }
     post {
         always {
