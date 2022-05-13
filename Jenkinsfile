@@ -1,14 +1,14 @@
 pipeline {
+    agent {
+        docker {
+            image 'timesheet'
+            registryUrl 'https://registry.hub.docker.com'
+            registryCredentialsId 'Docker'
+            args '-v /var/jenkins_home/.m2:/root/.m2'
+        }
+    }
     environment {
 
-        agent {
-            docker {
-                image 'timesheet'
-                registryUrl 'https://registry.hub.docker.com'
-                registryCredentialsId 'Docker'
-                args '-v /var/jenkins_home/.m2:/root/.m2'
-            }
-        }
         imagename = "timesheet"
         registryCredential = 'yenigul-dockerhub'
         dockerImage = ''
