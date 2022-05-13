@@ -76,7 +76,7 @@ pipeline {
 //        }
         stage('Run Docker containers') {
             steps {
-                bat "docker-compose up -d"
+                bat "Docker compose -f timesheet.yaml up"
             }
         }
         stage('TEST') {
