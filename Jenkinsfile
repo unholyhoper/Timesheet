@@ -1,16 +1,17 @@
 pipeline {
-    agent {
-        docker {
-            alwaysPull false
-            image 'timesheet'
-            registryCredentialsId 'docker'
-            args '-v /var/jenkins_home/.m2:/root/.m2'
-        }
-    }
+//    agent {
+//        docker {
+//            alwaysPull false
+//            image 'timesheet'
+//            registryCredentialsId 'docker'
+//            dockerRegistry
+//            args '-v /var/jenkins_home/.m2:/root/.m2'
+//        }
+//    }
     environment {
-
+        registry = "unholyhoper/timesheet"
         imagename = "timesheet"
-        registryCredential = 'yenigul-dockerhub'
+        registryCredential = 'docker'
         dockerImage = ''
     }
 
@@ -75,12 +76,13 @@ pipeline {
         stage('Push our image') {
             steps {
                 script {
-                    dockerImage.push("$BUILD_NUMBER")
-                    dockerImage.push('latest')
+                    docker.withRegistry('', registryCredential) {
+                        dockerImage.push()
+                    }
                 }
             }
         }
+
+
     }
-
-
 }
