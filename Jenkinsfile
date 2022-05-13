@@ -3,7 +3,6 @@ pipeline {
         docker {
             image 'timesheet'
             registryCredentialsId 'docker'
-            args '-v /var/jenkins_home/.m2:/root/.m2'
         }
     }
     environment {
