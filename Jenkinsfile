@@ -1,5 +1,6 @@
 pipeline {
-    agent { docker { image 'timesheet' } }
+    agent {                 docker.withRegistry('https://registry.hub.docker.com','Docker')
+     { image 'timesheet' } }
     environment {
 
     imagename = "timesheet"
@@ -61,7 +62,6 @@ pipeline {
         stage('Building our image') {
             steps{
                 script {
-                docker.withRegistry('https://registry.hub.docker.com','Docker')
                 dockerImage = docker.build registry + ":$BUILD_NUMBER"
                         }
                 }
@@ -69,7 +69,6 @@ pipeline {
         stage('Push our image') {
             steps{
                 script {
-                    docker.withRegistry( '', registryCredential ) {
                         dockerImage.push("$BUILD_NUMBER")
                         dockerImage.push('latest')
 					}
