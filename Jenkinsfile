@@ -39,7 +39,12 @@ pipeline {
                 bat 'mvn compile';
             }
         }
-
+        stage('TEST') {
+            steps {
+                echo 'Running JUnit tests'
+                bat 'mvn test';
+            }
+        }
         stage('SONARQUE SCAN') {
             steps {
                 echo 'Launching sonarqube scan';
@@ -77,12 +82,6 @@ pipeline {
         stage('Run Docker containers') {
             steps {
                 bat "Docker compose -f timesheet.yaml up"
-            }
-        }
-        stage('TEST') {
-            steps {
-                echo 'Running JUnit tests'
-                bat 'mvn test';
             }
         }
     }
