@@ -49,7 +49,7 @@ pipeline {
         stage('DEPLOY') {
             steps {
 				echo 'Deploying the Project';
-				bat 'mvn deploy:deploy-file -DgroupId=tn.esprit.spring -DartifactId=Timesheet -Dversion=2x.0 -DgeneratePom=true -Dpackaging=war -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/Timesheet-2.0.war';
+				bat 'mvn clean package -DskipTests deploy:deploy-file -DgroupId=tn.esprit.spring -DartifactId=Timesheet -Dversion=1.0.0-SNAPSHOT -DgeneratePom=true -Dpackaging=war -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-snapshots/ -Dfile=target/Timesheet-1.0.0-SNAPSHOT.war';
             }
         }
 
