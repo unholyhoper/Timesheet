@@ -61,6 +61,14 @@ public class Timesheet implements Serializable{
 		this.employe = employe;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Timesheet{" +
+				"timesheetPK=" + timesheetPK +
+				", mission=" + mission +
+				", employe=" + employe +
+				", isValide=" + isValide +
+				'}';
+	}
 	
 }
