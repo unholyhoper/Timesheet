@@ -37,7 +37,6 @@ pipeline {
             steps {
                 echo 'Compiling Project';
                 bat 'mvn compile';
-
             }
         }
 
@@ -45,13 +44,6 @@ pipeline {
             steps {
                 echo 'Launching sonarqube scan';
                 bat 'mvn sonar:sonar -Dsonar.projectKey=Projet-DEVOPS-Sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=03e7a8c0ba1a11b502e1bfa698cee58f370ddf6a';
-            }
-        }
-        stage('TEST') {
-            steps {
-                echo 'Running JUnit tests'
-                bat 'mvn test';
-
             }
         }
         stage('PACKAGE') {
@@ -85,6 +77,12 @@ pipeline {
         stage('Run Docker containers') {
             steps {
                 bat "docker compose up -d -f timesheet.yaml"
+            }
+        }
+        stage('TEST') {
+            steps {
+                echo 'Running JUnit tests'
+                bat 'mvn test';
             }
         }
     }
