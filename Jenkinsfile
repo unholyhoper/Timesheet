@@ -70,20 +70,20 @@ pipeline {
                 }
             }
         }
-//        stage('Push our image') {
-//            steps {
-//                script {
-//                    docker.withRegistry('', registryCredential) {
-//                        dockerImage.push()
-//                    }
-//                }
-//            }
-//        }
-        stage('Run Docker containers') {
+        stage('Push our image') {
             steps {
-                bat "Docker compose -f timesheet.yaml up"
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        dockerImage.push()
+                    }
+                }
             }
         }
+//        stage('Run Docker containers') {
+//            steps {
+//                bat "Docker compose -f timesheet.yaml up"
+//            }
+//        }
     }
     post {
         always {
